@@ -26,7 +26,7 @@ function AddTodoForm() {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <input
-        type="text" // Corregido a "text"
+        type="text"
         value={inputValue}
         onChange={handleInputChange}
         placeholder="Agregar nueva tarea"
