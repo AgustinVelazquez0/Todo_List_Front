@@ -6,7 +6,7 @@ import styles from "./Styles/TodoList.module.css";
 function TodoList() {
   const { todos, deleteTodo, toggleComplete } = useContext(TodoContext);
 
-  console.log(todos); // Verifica la estructura de los datos
+  console.log(todos);
 
   return (
     <div className={styles.containerToDoList}>
@@ -16,7 +16,7 @@ function TodoList() {
         ) : (
           todos.map((todo) => (
             <TodoItem
-              key={todo._id} // Asegúrate de usar una clave única
+              key={todo._id}
               todo={todo}
               deleteTodo={deleteTodo}
               toggleComplete={toggleComplete}

@@ -84,13 +84,13 @@ export function TodoProvider({ children }) {
   // Función para cambiar el estado de completado
   const toggleComplete = async (_id) => {
     // Cambio de id a _id
-    const todo = todos.find((todo) => todo._id === _id); // Cambio de id a _id
+    const todo = todos.find((todo) => todo._id === _id);
     try {
       await axios.put(`http://localhost:5000/todos/${_id}`, {
         ...todo,
         completed: !todo.completed,
       });
-      dispatch({ type: TOGGLE_COMPLETE, payload: _id }); // Cambio de id a _id
+      dispatch({ type: TOGGLE_COMPLETE, payload: _id });
     } catch (error) {
       console.error("Error toggling todo:", error);
     }

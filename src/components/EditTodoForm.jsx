@@ -13,7 +13,7 @@ function EditTodoForm() {
 
   // Encuentra la tarea asociada al _id
   useEffect(() => {
-    const todo = todos.find((todo) => todo._id === _id); // Busca la tarea por _id
+    const todo = todos.find((todo) => todo._id === _id);
     if (todo) {
       setName(todo.name); // Si se encuentra, establece el estado inicial
     } else {
@@ -24,7 +24,7 @@ function EditTodoForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.trim() === "") {
-      setError("El nombre de la tarea no puede estar vacío."); // Mensaje de validación
+      setError("El nombre de la tarea no puede estar vacío.");
       return;
     }
 
