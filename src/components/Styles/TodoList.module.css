@@ -74,6 +74,12 @@
   transition: background-color 0.3s ease-in-out; /* Transición suave */
 }
 
+.noTasksMessage {
+  color: #777;
+  font-style: italic;
+  text-align: center;
+}
+
 /* Efecto hover para el botón de eliminar */
 .deleteButton:hover {
   background-color: #ff6666;

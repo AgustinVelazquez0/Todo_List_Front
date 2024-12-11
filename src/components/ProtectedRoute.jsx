@@ -9,7 +9,12 @@ function ProtectedRoute({ children }) {
     return <div>Cargando...</div>;
   }
 
-  return user ? children : <Navigate to="/login" />;
+  // Si el usuario no está autenticado, redirige a /login, excepto cuando la ruta sea /login
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  return children; // Permite el acceso a la ruta protegida
 }
 
 export default ProtectedRoute;

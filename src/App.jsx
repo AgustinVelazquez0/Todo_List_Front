@@ -23,15 +23,29 @@ function AppContent() {
         <AddTodoForm />
         <Routes>
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/" element={<ProtectedRoute element={<TodoList />} />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <TodoList />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/edit/:_id"
-            element={<ProtectedRoute element={<EditTodoForm />} />}
+            element={
+              <ProtectedRoute>
+                <EditTodoForm />
+              </ProtectedRoute>
+            }
           />
-          {/* Ruta /todos que ahora redirige a TodoList */}
           <Route
             path="/todos"
-            element={<ProtectedRoute element={<TodoList />} />}
+            element={
+              <ProtectedRoute>
+                <TodoList />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </div>
