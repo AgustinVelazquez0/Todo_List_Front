@@ -1,3 +1,5 @@
+// src/context/AuthContext.jsx
+
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +9,25 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null); // Guardar la información del usuario
   const navigate = useNavigate();
+
+  // Función de login
+  const login = (token, user) => {
+    localStorage.setItem("token", token); // Guardar el token en el almacenamiento local
+    localStorage.setItem("user", JSON.stringify(user)); // Guardar el usuario en el localStorage
+    setAuthenticated(true); // Marcar como autenticado
+    setUser(user); // Guardar la información del usuario en el estado
+    console.log("Usuario autenticado:", user);
+  };
+
+  // Función de logout
+  const logout = () => {
+    localStorage.removeItem("token"); // Eliminar el token del almacenamiento local
+    localStorage.removeItem("user"); // Eliminar la información del usuario del almacenamiento local
+    setAuthenticated(false); // Marcar como no autenticado
+    setUser(null); // Limpiar la información del usuario
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,6 +56,7 @@ export function AuthProvider({ children }) {
         console.log("Auth response:", response);
         if (response.data) {
           setAuthenticated(true); // Usuario autenticado
+          setUser(response.data); // Establecer el usuario autenticado
         } else {
           setAuthenticated(false); // No está autenticado
         }
@@ -67,7 +88,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
+    <AuthContext.Provider value={{ authenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

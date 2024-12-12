@@ -1,11 +1,12 @@
 // LoginForm.jsx
+
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext"; // Importamos el contexto
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
-  const { login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext); // Accedemos a la función login desde el contexto
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,27 +24,32 @@ function LoginForm() {
     try {
       let response;
       if (isLogin) {
+        // Iniciar sesión
         response = await axios.post("http://localhost:5000/users/login", {
           email,
           password,
         });
+        console.log("Respuesta del servidor:", response.data);
       } else {
+        // Registrar nuevo usuario
         response = await axios.post("http://localhost:5000/users/register", {
           name,
           document,
           email,
           password,
         });
+        console.log("Respuesta del servidor:", response.data);
       }
 
       const { token, user } = response.data;
+      console.log("Token:", token);
 
-      localStorage.setItem("authToken", token);
-
+      // Llamamos a la función login del contexto para almacenar el token y usuario
       login(token, user);
 
-      navigate("/todos");
+      navigate("/todos"); // Redirigir al usuario a la página principal después de login
     } catch (err) {
+      console.error("Error:", err);
       setError(
         err.response?.data?.message || "Error, por favor intente de nuevo."
       );
