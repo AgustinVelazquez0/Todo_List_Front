@@ -1,78 +1,76 @@
-// src/context/AuthContext.jsx
-
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Cargando el estado de la autenticación
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log("Token:", token);
 
-    if (token) {
-      // Verificar el token con el backend
-      axios
-        .get("/api/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setUser(response.data.user); // Establecer el usuario si la autenticación es exitosa
-          if (window.location.pathname !== "/todos") {
-            navigate("/todos"); // Redirige a /todos si no estamos ya allí
-          }
-        })
-        .catch(() => {
-          // Si falla, eliminar el token y redirigir al login
-          localStorage.removeItem("token");
-          navigate("/login");
-        })
-        .finally(() => {
-          setLoading(false); // Cambiar el estado de carga cuando la verificación termine
-        });
-    } else {
-      setLoading(false); // Si no hay token, terminamos el estado de carga
+    // Si no hay token, no intentamos autenticar y redirigimos
+    if (!token) {
+      setAuthenticated(false); // No está autenticado
+      setLoading(false); // Se termina la carga
+      // Solo redirigimos si no estamos ya en la página de login
+      if (window.location.pathname !== "/login") {
+        console.log("Redirigiendo a login...");
+        navigate("/login"); // Redirigimos al login
+      }
+      return; // Evitamos la siguiente parte si no hay token
     }
-  }, [navigate]);
 
-  const login = (token, userData) => {
-    try {
-      console.log("Token recibido:", token);
-      console.log("Usuario:", userData);
-      localStorage.setItem("token", token);
-      setUser(userData);
-      navigate("/todos"); // Redirige a /todos
-    } catch (error) {
-      console.error("Error en el login:", error);
-      // Mostrar mensaje de error o redirigir de nuevo al login
+    // Si hay token, hacemos la solicitud para verificar la autenticación
+    axios
+      .get("http://localhost:5000/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Auth response:", response);
+        if (response.data) {
+          setAuthenticated(true); // Usuario autenticado
+        } else {
+          setAuthenticated(false); // No está autenticado
+        }
+      })
+      .catch(() => {
+        setAuthenticated(false); // En caso de error, no está autenticado
+      })
+      .finally(() => {
+        console.log("Finalizando carga...");
+        setLoading(false); // Marcamos como terminado el proceso de carga
+      });
+  }, [navigate]); // Dependemos de navigate para evitar ciclos innecesarios
+
+  // Redirigir cuando la autenticación sea falsa y no estemos en la página de login
+  useEffect(() => {
+    // No realizar nada hasta que la carga termine
+    if (loading) return;
+
+    // Solo redirigimos si no estamos autenticados y no estamos en la página de login
+    if (!authenticated && window.location.pathname !== "/login") {
+      console.log("Redirigiendo al login por autenticación fallida...");
+      navigate("/login");
     }
-  };
+  }, [authenticated, loading, navigate]);
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    setLoading(false); // Asegura que el loading esté en false
-    navigate("/login");
-  };
-
+  // Si estamos cargando, mostramos una pantalla de carga
   if (loading) {
-    return <div>Loading...</div>; // Mostrar indicador de carga mientras verificamos el estado
+    return <div>Loading...</div>;
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Crea el hook useAuth para acceder al contexto
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export { AuthContext };

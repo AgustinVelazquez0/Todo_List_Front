@@ -1,19 +1,33 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// App.jsx
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { TodoProvider } from "./components/TodoContext";
-import TodoList from "./components/TodoList"; // Asegúrate de importar correctamente TodoList
+import TodoList from "./components/TodoList";
 import AddTodoForm from "./components/AddTodoForm";
 import EditTodoForm from "./components/EditTodoForm";
 import styles from "./App.module.css";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./hooks/useAuth";
 import LoginForm from "./components/LoginForm";
 
 // Componente para manejar el loading
 function AppContent() {
-  const { loading } = useAuth(); // Obtenemos el estado de carga del contexto
+  const { loading } = useAuth();
+  console.log("Estado de carga:", loading);
 
   if (loading) {
-    return <div>Loading...</div>;
+    console.log("Mostrando estado de carga...");
+    return (
+      <div className={styles.loadingContainer}>
+        <div className={styles.spinner}></div>
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
@@ -23,8 +37,9 @@ function AppContent() {
         <AddTodoForm />
         <Routes>
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<Navigate to="/todos" replace />} />
           <Route
-            path="/"
+            path="/todos"
             element={
               <ProtectedRoute>
                 <TodoList />
@@ -39,14 +54,6 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/todos"
-            element={
-              <ProtectedRoute>
-                <TodoList />
-              </ProtectedRoute>
-            }
-          />
         </Routes>
       </div>
     </div>
@@ -55,13 +62,13 @@ function AppContent() {
 
 function App() {
   return (
-    <TodoProvider>
-      <Router>
-        <AuthProvider>
+    <Router>
+      <AuthProvider>
+        <TodoProvider>
           <AppContent />
-        </AuthProvider>
-      </Router>
-    </TodoProvider>
+        </TodoProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
