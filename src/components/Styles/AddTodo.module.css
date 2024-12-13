@@ -10,6 +10,7 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
 /* Estilos del input */
@@ -22,6 +23,7 @@
   outline: none;
   background-color: rgb(2 51 51);
   transition: border-color 0.3s ease; /* Transición suave cuando se enfoque */
+  color: white;
 }
 
 .input:focus {
