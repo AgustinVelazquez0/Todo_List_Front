@@ -1,4 +1,3 @@
-// App.jsx
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,13 +14,10 @@ import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import LoginForm from "./components/LoginForm";
 
-// Componente para manejar el loading
 function AppContent() {
-  const { loading } = useAuth();
-  console.log("Estado de carga:", loading);
+  const { loading } = useAuth(); // Obtenemos loading directamente del contexto
 
   if (loading) {
-    console.log("Mostrando estado de carga...");
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.spinner}></div>

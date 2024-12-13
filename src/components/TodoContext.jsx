@@ -1,11 +1,9 @@
-// src/context/TodoContext.jsx
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth"; // Asegúrate de que el hook useAuth esté correcto
 
 const TodoContext = createContext(); // Creamos el contexto
 
-// TodoProvider es el componente que proveerá el contexto a sus hijos
 export function TodoProvider({ children }) {
   const { authenticated } = useAuth(); // Obtenemos el estado de autenticación desde el hook useAuth
   const [todos, setTodos] = useState([]);
@@ -14,41 +12,111 @@ export function TodoProvider({ children }) {
   // Efecto para cargar los todos cuando el estado de autenticación cambie
   useEffect(() => {
     if (!authenticated) {
-      // Si no está autenticado, redirigimos al login solo si no estamos ya en la página de login
       if (window.location.pathname !== "/login") {
-        window.location.replace("/login"); // Manteniendo la lógica de redirección
+        window.location.replace("/login");
       }
-      return; // Evitamos ejecutar el resto del código si no está autenticado
+      return;
     }
 
-    axios
-      .get("http://localhost:5000/todos", {
+    const fetchTodos = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:5000/todos", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setTodos(response.data);
+      } catch (error) {
+        console.error("Error fetching todos:", error);
+        setTodos([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTodos();
+  }, [authenticated]);
+
+  const addTodo = async (title) => {
+    const newTodo = {
+      title,
+      completed: false,
+    };
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:5000/todos",
+        newTodo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTodos((prevTodos) => [...prevTodos, response.data]);
+    } catch (error) {
+      console.error("Error adding todo:", error);
+    }
+  };
+
+  const toggleComplete = async (_id) => {
+    const todo = todos.find((todo) => todo._id === _id);
+    if (!todo) return; // Verifica que el todo exista
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:5000/todos/${_id}`,
+        { ...todo, completed: !todo.completed },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) =>
+          todo._id === _id ? { ...todo, completed: !todo.completed } : todo
+        )
+      );
+    } catch (error) {
+      console.error("Error toggling todo:", error);
+    }
+  };
+
+  const deleteTodo = async (_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:5000/todos/${_id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Usamos el token del localStorage
+          Authorization: `Bearer ${token}`,
         },
-      })
-      .then((response) => {
-        setTodos(response.data); // Guardamos los todos obtenidos
-      })
-      .catch(() => {
-        setTodos([]); // Si ocurre un error, establecemos los todos como vacíos
-      })
-      .finally(() => {
-        setLoading(false); // Al terminar la petición, desactivamos el estado de carga
       });
-  }, [authenticated]); // Dependencia solo de authenticated
-
-  // Funciones para manejar las tareas
-  const addTodo = (todo) => {
-    setTodos([...todos, todo]); // Agregar tarea
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== _id));
+    } catch (error) {
+      console.error("Error deleting todo:", error);
+    }
   };
 
-  const removeTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id)); // Eliminar tarea por ID
-  };
+  const editTodo = async (_id, title) => {
+    const updatedTodo = { ...todos.find((todo) => todo._id === _id), title };
+    if (!updatedTodo) return; // Verifica que el todo exista
 
-  const updateTodo = (id, updatedTodo) => {
-    setTodos(todos.map((todo) => (todo.id === id ? updatedTodo : todo))); // Actualizar tarea
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(`http://localhost:5000/todos/${_id}`, updatedTodo, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) => (todo._id === _id ? updatedTodo : todo))
+      );
+    } catch (error) {
+      console.error("Error editing todo:", error);
+    }
   };
 
   return (
@@ -57,8 +125,9 @@ export function TodoProvider({ children }) {
         todos,
         loading,
         addTodo,
-        removeTodo,
-        updateTodo,
+        toggleComplete,
+        deleteTodo,
+        editTodo,
       }}
     >
       {children}
@@ -66,5 +135,4 @@ export function TodoProvider({ children }) {
   );
 }
 
-// Exportamos el contexto para que se pueda usar en otros componentes
 export { TodoContext };
