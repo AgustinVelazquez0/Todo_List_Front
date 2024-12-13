@@ -1,12 +1,11 @@
-// LoginForm.jsx
-
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext"; // Importamos el contexto
+import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styles from "./Styles/LoginForm.module.css";
 
 function LoginForm() {
-  const { login } = useContext(AuthContext); // Accedemos a la función login desde el contexto
+  const { login } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +28,6 @@ function LoginForm() {
           email,
           password,
         });
-        console.log("Respuesta del servidor:", response.data);
       } else {
         // Registrar nuevo usuario
         response = await axios.post("http://localhost:5000/users/register", {
@@ -38,18 +36,14 @@ function LoginForm() {
           email,
           password,
         });
-        console.log("Respuesta del servidor:", response.data);
       }
 
       const { token, user } = response.data;
-      console.log("Token:", token);
 
       // Llamamos a la función login del contexto para almacenar el token y usuario
       login(token, user);
-
-      navigate("/todos"); // Redirigir al usuario a la página principal después de login
+      navigate("/todos"); // Redirigir al usuario después del login
     } catch (err) {
-      console.error("Error:", err);
       setError(
         err.response?.data?.message || "Error, por favor intente de nuevo."
       );
@@ -59,13 +53,15 @@ function LoginForm() {
   };
 
   return (
-    <div>
-      <h2>{isLogin ? "Iniciar Sesión" : "Registrar Cuenta"}</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className={styles.container}>
+      <h2 className={styles.title}>
+        {isLogin ? "Iniciar Sesión" : "Registrar Cuenta"}
+      </h2>
+      {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleSubmit}>
         {!isLogin && (
           <>
-            <div>
+            <div className={styles.formGroup}>
               <label htmlFor="name">Nombre</label>
               <input
                 id="name"
@@ -74,9 +70,10 @@ function LoginForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                aria-required="true"
               />
             </div>
-            <div>
+            <div className={styles.formGroup}>
               <label htmlFor="document">Documento</label>
               <input
                 id="document"
@@ -85,11 +82,12 @@ function LoginForm() {
                 value={document}
                 onChange={(e) => setDocument(e.target.value)}
                 required
+                aria-required="true"
               />
             </div>
           </>
         )}
-        <div>
+        <div className={styles.formGroup}>
           <label htmlFor="email">Correo Electrónico</label>
           <input
             id="email"
@@ -98,9 +96,10 @@ function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            aria-required="true"
           />
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label htmlFor="password">Contraseña</label>
           <input
             id="password"
@@ -109,9 +108,10 @@ function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            aria-required="true"
           />
         </div>
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className={styles.button} disabled={isLoading}>
           {isLoading
             ? "Cargando..."
             : isLogin
@@ -119,8 +119,11 @@ function LoginForm() {
             : "Registrar Cuenta"}
         </button>
       </form>
-      <div>
-        <button onClick={() => setIsLogin(!isLogin)}>
+      <div className={styles.switchButton}>
+        <button
+          onClick={() => setIsLogin(!isLogin)}
+          className={styles.switchButtonText}
+        >
           {isLogin
             ? "¿No tienes cuenta? Regístrate"
             : "¿Ya tienes cuenta? Inicia sesión"}
