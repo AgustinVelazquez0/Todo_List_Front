@@ -14,6 +14,23 @@ import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import LoginForm from "./components/LoginForm";
 
+function Navbar() {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  return (
+    <nav className={styles.navbar}>
+      <h1 className={styles.logo}>To Do List</h1>
+      <button onClick={handleLogout} className={styles.logoutButton}>
+        Logout
+      </button>
+    </nav>
+  );
+}
+
 function AppContent() {
   const { loading } = useAuth(); // Obtenemos loading directamente del contexto
 
@@ -28,8 +45,8 @@ function AppContent() {
 
   return (
     <div className={styles.PrincipalContenedor}>
+      <Navbar /> {/* Agregamos la barra de navegación aquí */}
       <div className={styles.App}>
-        <h1 className={styles.title}>To Do List</h1>
         <AddTodoForm />
         <Routes>
           <Route path="/login" element={<LoginForm />} />

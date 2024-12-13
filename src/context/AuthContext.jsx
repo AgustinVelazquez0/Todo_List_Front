@@ -19,10 +19,11 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setAuthenticated(false);
-    setUser(null);
+    localStorage.removeItem("token"); // Elimina el token
+    localStorage.removeItem("user"); // Elimina el usuario
+    setAuthenticated(false); // Desautentica al usuario
+    setUser(null); // Limpia los datos del usuario
+    navigate("/login"); // Redirige al login
   };
 
   useEffect(() => {
