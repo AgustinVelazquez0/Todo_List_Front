@@ -65,11 +65,11 @@
 }
 
 .incompleto {
-  background-color: red;
+  background-color: rgb(131, 6, 6);
 }
 
 .botonEliminar {
-  background-color: rgb(245, 234, 234);
+  background-color: rgb(75, 75, 75);
   color: rgb(0, 0, 0);
   transition: background-color 0.3s ease; /* Transición suave al hacer hover */
 }

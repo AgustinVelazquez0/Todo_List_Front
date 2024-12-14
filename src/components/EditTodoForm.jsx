@@ -46,7 +46,7 @@ function EditTodoForm() {
           type="text"
           value={name || ""} // Garantiza que el input siempre sea controlado
           onChange={handleChange} // Manejo del cambio en el input
-          placeholder={name || "Editar tarea"} // Muestra dinámicamente el nombre de la tarea
+          placeholder={name || "Editar la tarea"} // Muestra dinámicamente el nombre de la tarea
           required
         />
         <button className={styles.saveButton} type="submit">
