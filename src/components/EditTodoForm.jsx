@@ -15,7 +15,7 @@ function EditTodoForm() {
   useEffect(() => {
     const todo = todos.find((todo) => todo._id === _id);
     if (todo) {
-      setName(todo.name); // Si se encuentra, establece el estado inicial
+      setName(todo.name || ""); // Si se encuentra, establece el estado inicial con un valor seguro
     } else {
       setError("Tarea no encontrada."); // Muestra un error si no se encuentra la tarea
     }
@@ -28,8 +28,13 @@ function EditTodoForm() {
       return;
     }
 
-    editTodo(_id, name); // Actualiza la tarea usando _id
+    editTodo(_id, name.trim()); // Actualiza la tarea usando _id
     navigate("/"); // Redirige a la lista principal
+  };
+
+  const handleChange = (e) => {
+    setName(e.target.value); // Actualiza el estado del input
+    if (error) setError(""); // Limpia el mensaje de error si el usuario escribe
   };
 
   return (
@@ -39,9 +44,9 @@ function EditTodoForm() {
         <input
           className={styles.inputEdit}
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)} // Permite cambiar el valor del input
-          placeholder="Editar tarea"
+          value={name || ""} // Garantiza que el input siempre sea controlado
+          onChange={handleChange} // Manejo del cambio en el input
+          placeholder={name || "Editar tarea"} // Muestra dinámicamente el nombre de la tarea
           required
         />
         <button className={styles.saveButton} type="submit">
