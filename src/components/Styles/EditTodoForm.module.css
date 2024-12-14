@@ -1,13 +1,13 @@
 .saveButton {
   padding: 5px 10px;
-  background-color: #4a90e2;
+  background-color: #023333;
   color: #fff;
   border: none;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 5px;
+  margin-left: 30px;
   margin-top: 10px;
 }
 

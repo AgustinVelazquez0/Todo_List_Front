@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types"; // Importa PropTypes
 
 const AuthContext = createContext();
 
@@ -66,5 +67,10 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+// Definición de PropTypes
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired, // Validación para 'children'
+};
 
 export { AuthContext };

@@ -12,7 +12,7 @@ function Navbar() {
     <nav className={styles.nav}>
       <h1 className={styles.title}>To Do List</h1>
       <button className={styles.button} onClick={handleLogout}>
-        Logout
+        Cerrar sesión
       </button>
     </nav>
   );

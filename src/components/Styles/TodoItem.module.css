@@ -1,12 +1,12 @@
 .containerText {
   max-width: 800px;
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
-  background-color: rgb(33 39 43);
+  background-color: rgb(0 0 0 / 48%);
   color: navy;
   display: flex;
   justify-content: space-between;
-  width: 600px;
+  width: 585px;
   height: auto;
   word-wrap: break-word;
   overflow-y: hidden;
@@ -14,20 +14,19 @@
 }
 
 .todoItem {
-  margin-bottom: 10px;
-  margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
   background-color: rgb(2 51 51);
   display: flex;
   width: 100%;
+  min-height: 65px;
   max-width: 575px;
   justify-content: space-between;
-  word-wrap: break-word; /* Permitir que el texto largo se divida en líneas */
+  word-wrap: break-word;
 }
 
 .todoItem:hover {
-  background-color: #ad7408b0; /* Color de fondo al pasar el mouse */
+  background-color: #2b5f946e;
 }
 
 .tareaTexto {
