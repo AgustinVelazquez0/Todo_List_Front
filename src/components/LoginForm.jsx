@@ -37,14 +37,18 @@ function LoginForm() {
           email,
           password,
         });
-        console.log("Enviando datos:", { email, password }); // En login
+        console.log("Enviando datos:", { email, password }); // En registro
       }
 
-      const { token, user } = response.data;
-
-      // Llamamos a la función login del contexto para almacenar el token y usuario
-      login(token, user);
-      navigate("/todos"); // Redirigir al usuario después del login
+      // Si es login, almacenar el token
+      if (isLogin) {
+        const { token, user } = response.data;
+        login(token, user); // Llamamos a login solo en login
+        navigate("/todos"); // Redirigir al usuario a /todos después del login
+      } else {
+        // Si es registro, solo redirigir a /login sin hacer login automático
+        navigate("/login"); // Redirigir a login después del registro
+      }
     } catch (err) {
       setError(
         err.response?.data?.message || "Error, por favor intente de nuevo."
