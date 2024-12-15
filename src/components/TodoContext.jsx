@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth"; // Asegúrate de que el hook useAuth esté correcto
+import PropTypes from "prop-types";
 
 const TodoContext = createContext(); // Creamos el contexto
 
@@ -134,5 +135,9 @@ export function TodoProvider({ children }) {
     </TodoContext.Provider>
   );
 }
+
+TodoProvider.propTypes = {
+  children: PropTypes.node.isRequired, // Esto valida que 'children' sea un nodo de React
+};
 
 export { TodoContext };

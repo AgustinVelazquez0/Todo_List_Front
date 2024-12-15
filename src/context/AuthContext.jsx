@@ -1,17 +1,18 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types"; // Importa PropTypes
+import PropTypes from "prop-types";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [authenticated, setAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // Inicializamos correctamente
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const login = (token, user) => {
+    // Guardamos el token y el usuario en el estado y localStorage
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
     setAuthenticated(true);
@@ -20,10 +21,11 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem("token"); // Elimina el token
-    localStorage.removeItem("user"); // Elimina el usuario
-    setAuthenticated(false); // Desautentica al usuario
-    setUser(null); // Limpia los datos del usuario
+    // Limpiamos el localStorage y el estado
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setAuthenticated(false);
+    setUser(null);
     navigate("/login"); // Redirige al login
   };
 
@@ -56,7 +58,7 @@ export function AuthProvider({ children }) {
       .catch(() => {
         setAuthenticated(false);
       })
-      .finally(() => setLoading(false)); // Finalizamos siempre la carga
+      .finally(() => setLoading(false)); // Asegura que 'loading' se ponga a false al final
   }, [navigate]);
 
   return (
@@ -68,9 +70,8 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Definición de PropTypes
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired, // Validación para 'children'
+  children: PropTypes.node.isRequired,
 };
 
 export { AuthContext };
