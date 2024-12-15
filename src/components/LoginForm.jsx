@@ -28,6 +28,7 @@ function LoginForm() {
           email,
           password,
         });
+        console.log("Enviando datos:", { email, password }); // En login
       } else {
         // Registrar nuevo usuario
         response = await axios.post("http://localhost:5000/users/register", {
@@ -36,6 +37,7 @@ function LoginForm() {
           email,
           password,
         });
+        console.log("Enviando datos:", { email, password }); // En login
       }
 
       const { token, user } = response.data;
