@@ -68,6 +68,15 @@
   transition: background-color 0.3s;
 }
 
+.success {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: left; /* Asegura alineación inicial */
+  padding-left: 110px; /* Desplaza el texto hacia la derecha */
+  justify-content: center;
+}
+
 .button:disabled {
   background-color: #ccc;
   cursor: not-allowed;

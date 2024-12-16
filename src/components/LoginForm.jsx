@@ -12,12 +12,14 @@ function LoginForm() {
   const [name, setName] = useState("");
   const [document, setDocument] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccessMessage(""); // Limpiar cualquier mensaje previo
     setIsLoading(true);
 
     try {
@@ -28,7 +30,7 @@ function LoginForm() {
           email,
           password,
         });
-        console.log("Enviando datos:", { email, password }); // En login
+        console.log("Enviando datos:", { email, password });
       } else {
         // Registrar nuevo usuario
         response = await axios.post("http://localhost:5000/users/register", {
@@ -37,17 +39,18 @@ function LoginForm() {
           email,
           password,
         });
-        console.log("Enviando datos:", { email, password }); // En registro
+        console.log("Enviando datos:", { name, document, email, password });
+
+        // Mostrar mensaje de éxito
+        setSuccessMessage("¡Registro exitoso!");
+        setTimeout(() => setSuccessMessage(""), 5000); // Opcional: borrar después de 5 segundos
       }
 
-      // Si es login, almacenar el token
+      // Lógica solo para login
       if (isLogin) {
         const { token, user } = response.data;
-        login(token, user); // Llamamos a login solo en login
-        navigate("/todos"); // Redirigir al usuario a /todos después del login
-      } else {
-        // Si es registro, solo redirigir a /login sin hacer login automático
-        navigate("/login"); // Redirigir a login después del registro
+        login(token, user);
+        navigate("/todos");
       }
     } catch (err) {
       setError(
@@ -64,6 +67,7 @@ function LoginForm() {
         {isLogin ? "Iniciar Sesión" : "Registrar Cuenta"}
       </h2>
       {error && <p className={styles.error}>{error}</p>}
+      {successMessage && <p className={styles.success}>{successMessage}</p>}
       <form onSubmit={handleSubmit}>
         {!isLogin && (
           <>
