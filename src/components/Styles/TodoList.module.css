@@ -71,6 +71,40 @@
   transition: background-color 0.3s ease-in-out; /* Transición suave */
 }
 
+/* Si ya tienes definidas tus clases, sólo agrega estas dos para el spinner */
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh; /* Ajusta según el tamaño de tu contenedor */
+}
+
+.loadingMessage {
+  font-size: 20px;
+  color: #333;
+  margin-top: 20px;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .noTasksMessage {
   color: #777;
   font-style: italic;

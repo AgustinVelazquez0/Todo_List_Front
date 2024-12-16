@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext"; // Ajusta la ruta si es necesario
+import styles from "./Styles/LogoutButton.module.css"; // Asegúrate de tener el archivo de estilo
 
 export function LogoutButton() {
   const { logout } = useContext(AuthContext);
@@ -9,21 +10,14 @@ export function LogoutButton() {
   };
 
   return (
-    <button onClick={handleLogout} style={buttonStyle}>
+    <button
+      onClick={handleLogout}
+      className={styles.button}
+      aria-label="Cerrar sesión"
+    >
       Logout
     </button>
   );
 }
-
-// Estilo básico para el botón
-const buttonStyle = {
-  padding: "8px 16px",
-  fontSize: "1rem",
-  color: "#fff",
-  backgroundColor: "#dc3545",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-};
 
 export default LogoutButton;

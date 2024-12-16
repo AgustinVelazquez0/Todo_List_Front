@@ -11,7 +11,11 @@ function Navbar() {
   return (
     <nav className={styles.nav}>
       <h1 className={styles.title}>To Do List</h1>
-      <button className={styles.button} onClick={handleLogout}>
+      <button
+        className={styles.button}
+        onClick={handleLogout}
+        aria-label="Cerrar sesión"
+      >
         Cerrar sesión
       </button>
     </nav>

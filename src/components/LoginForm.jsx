@@ -7,14 +7,21 @@ import styles from "./Styles/LoginForm.module.css";
 function LoginForm() {
   const { login } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [document, setDocument] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    document: "",
+  });
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,26 +34,22 @@ function LoginForm() {
       if (isLogin) {
         // Iniciar sesión
         response = await axios.post("http://localhost:5000/users/login", {
-          email,
-          password,
+          email: formData.email,
+          password: formData.password,
         });
-        console.log("Enviando datos:", { email, password });
       } else {
         // Registrar nuevo usuario
         response = await axios.post("http://localhost:5000/users/register", {
-          name,
-          document,
-          email,
-          password,
+          name: formData.name,
+          document: formData.document,
+          email: formData.email,
+          password: formData.password,
         });
-        console.log("Enviando datos:", { name, document, email, password });
 
-        // Mostrar mensaje de éxito
         setSuccessMessage("¡Registro exitoso!");
         setTimeout(() => setSuccessMessage(""), 5000); // Opcional: borrar después de 5 segundos
       }
 
-      // Lógica solo para login
       if (isLogin) {
         const { token, user } = response.data;
         login(token, user);
@@ -76,11 +79,11 @@ function LoginForm() {
               <input
                 id="name"
                 type="text"
+                name="name"
                 placeholder="Nombre completo"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={formData.name}
+                onChange={handleChange}
                 required
-                aria-required="true"
               />
             </div>
             <div className={styles.formGroup}>
@@ -88,11 +91,11 @@ function LoginForm() {
               <input
                 id="document"
                 type="text"
+                name="document"
                 placeholder="Documento de identidad"
-                value={document}
-                onChange={(e) => setDocument(e.target.value)}
+                value={formData.document}
+                onChange={handleChange}
                 required
-                aria-required="true"
               />
             </div>
           </>
@@ -102,11 +105,11 @@ function LoginForm() {
           <input
             id="email"
             type="email"
+            name="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             required
-            aria-required="true"
           />
         </div>
         <div className={styles.formGroup}>
@@ -114,11 +117,11 @@ function LoginForm() {
           <input
             id="password"
             type="password"
+            name="password"
             placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
             required
-            aria-required="true"
           />
         </div>
         <button type="submit" className={styles.button} disabled={isLoading}>

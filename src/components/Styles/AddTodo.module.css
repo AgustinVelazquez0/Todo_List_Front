@@ -30,6 +30,12 @@
   border-color: #4a90e2;
 }
 
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+
 /* Estilos del botón */
 .button {
   padding: 10px 20px;

@@ -1,17 +1,14 @@
-// src/components/TodoItem.jsx
-
 import { FaCheck, FaTrash, FaEdit } from "react-icons/fa";
 import PropTypes from "prop-types";
 import styles from "./Styles/TodoItem.module.css";
 import { Link } from "react-router-dom";
 
 function TodoItem({
-  todo: { _id, title = "Tarea sin nombre", completed = false },
+  todo = { title: "Tarea sin nombre", completed: false },
   toggleComplete,
   deleteTodo,
 }) {
-  const handleToggleComplete = () => toggleComplete(_id);
-  const handleDeleteTodo = () => deleteTodo(_id);
+  const { _id, title, completed } = todo;
 
   return (
     <div className={styles.containerText}>
@@ -28,7 +25,7 @@ function TodoItem({
             className={`${styles.botonCompletar} ${
               completed ? styles.activo : styles.incompleto
             }`}
-            onClick={handleToggleComplete}
+            onClick={() => toggleComplete(_id)}
             aria-label={`Marcar como ${completed ? "incompleto" : "completo"}`}
           >
             <FaCheck />
@@ -40,7 +37,7 @@ function TodoItem({
           </Link>
           <button
             className={styles.botonEliminar}
-            onClick={handleDeleteTodo}
+            onClick={() => deleteTodo(_id)}
             aria-label="Eliminar tarea"
           >
             <FaTrash />
