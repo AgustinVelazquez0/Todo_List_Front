@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext"; // Ajusta la ruta si es necesario
-import styles from "./Styles/LogoutButton.module.css"; // Asegúrate de tener el archivo de estilo
+import { AuthContext } from "../context/AuthContext";
+import styles from "./Styles/LogoutButton.module.css";
 
 export function LogoutButton() {
   const { logout } = useContext(AuthContext);

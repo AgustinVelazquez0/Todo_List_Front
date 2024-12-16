@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../hooks/useAuth"; // Asegúrate de que el hook useAuth esté correcto
+import { useAuth } from "../hooks/useAuth";
 import PropTypes from "prop-types";
 
-const TodoContext = createContext(); // Creamos el contexto
+const TodoContext = createContext();
 
 export function TodoProvider({ children }) {
   const { authenticated } = useAuth(); // Obtenemos el estado de autenticación desde el hook useAuth
@@ -137,7 +137,7 @@ export function TodoProvider({ children }) {
 }
 
 TodoProvider.propTypes = {
-  children: PropTypes.node.isRequired, // Esto valida que 'children' sea un nodo de React
+  children: PropTypes.node.isRequired,
 };
 
 export { TodoContext };

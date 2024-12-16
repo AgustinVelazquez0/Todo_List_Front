@@ -1,6 +1,6 @@
-import { useTodo } from "../hooks/useTodo"; // Importa el hook useTodo desde su archivo
+import { useTodo } from "../hooks/useTodo";
 import TodoItem from "./TodoItem";
-import styles from "./Styles/TodoList.module.css"; // Asegúrate de que la ruta sea correcta
+import styles from "./Styles/TodoList.module.css";
 
 function TodoList() {
   const { todos, loading, toggleComplete, deleteTodo } = useTodo(); // Usar el hook useTodo para obtener todos y funciones

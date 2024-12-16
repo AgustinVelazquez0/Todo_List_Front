@@ -47,7 +47,7 @@ function LoginForm() {
         });
 
         setSuccessMessage("¡Registro exitoso!");
-        setTimeout(() => setSuccessMessage(""), 5000); // Opcional: borrar después de 5 segundos
+        setTimeout(() => setSuccessMessage(""), 5000);
       }
 
       if (isLogin) {

@@ -6,14 +6,14 @@ import EditTodoForm from "./EditTodoForm";
 import ProtectedRoute from "./ProtectedRoute";
 import LoginForm from "./LoginForm";
 import Navbar from "./Navbar";
-import Loading from "./Loading"; // Importamos el componente Loading
+import Loading from "./Loading";
 import styles from "../App.module.css";
 
 function AppContent() {
   const { loading } = useAuth();
 
   if (loading) {
-    return <Loading />; // Usamos el componente Loading en lugar del código inline
+    return <Loading />;
   }
 
   return (

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styles from "./Styles/EditTodoForm.module.css";
 
 function EditTodoForm() {
-  const { todos, editTodo, loading } = useContext(TodoContext); // Usamos el contexto para obtener todos y la función editTodo
+  const { todos, editTodo, loading } = useContext(TodoContext);
   const { _id } = useParams(); // Obtenemos el _id de los parámetros de la URL
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ function EditTodoForm() {
       if (todo) {
         setName(todo.title || ""); // Establece el nombre de la tarea
       } else {
-        setError("Tarea no encontrada."); // Error si no se encuentra la tarea
+        setError("Tarea no encontrada.");
       }
     }
   }, [_id, todos, loading]);
@@ -47,7 +47,6 @@ function EditTodoForm() {
   return (
     <div className={styles.editFormContainer}>
       {error && <p className={styles.error}>{error}</p>}{" "}
-      {/* Mensaje de error */}
       <form onSubmit={handleSubmit}>
         <input
           className={styles.inputEdit}

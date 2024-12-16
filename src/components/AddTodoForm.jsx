@@ -15,7 +15,7 @@ function AddTodoForm() {
   function handleSubmit(event) {
     event.preventDefault();
     if (inputValue.trim() === "") {
-      setErrorMessage("Por favor, ingresa una tarea."); // Establecer mensaje de error
+      setErrorMessage("Por favor, ingresa una tarea.");
       return;
     }
     addTodo(inputValue);
