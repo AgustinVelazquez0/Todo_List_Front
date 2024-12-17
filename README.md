@@ -27,7 +27,7 @@ Asegúrate de tener instalados los siguientes programas antes de comenzar:
 1. **Clonar el Repositorio:**
 
    ```bash
-   git clone git@github.com:AgustinVelazquez0/ReactToDoList.git
+   git clone https://github.com/AgustinVelazquez0/Todo_List_Front.git
 
    ```
 
@@ -49,7 +49,6 @@ Asegúrate de tener instalados los siguientes programas antes de comenzar:
    ```bash
    npm run dev
    ```
-   Luego, abre `http://localhost:3000` en tu navegador para ver la aplicación en funcionamiento.
 
 ## Estructura del Proyecto
 
@@ -61,7 +60,7 @@ Asegúrate de tener instalados los siguientes programas antes de comenzar:
 
   ## Back-End con MongoDB
 
-  Además, he desarrollado un back-end para este proyecto utilizando MongoDB, el cual se encuentra en un repositorio separado y público. Este back-end permite la persistencia de datos, como las tareas creadas por los usuarios. Puedes explorar ese repositorio en el siguiente enlace: `https://github.com/AgustinVelazquez0/todo-list-api`
+  Además, he desarrollado un back-end para este proyecto utilizando MongoDB, el cual se encuentra en un repositorio separado y público. Este back-end permite la persistencia de datos, como las tareas creadas por los usuarios. Puedes explorar ese repositorio en el siguiente enlace: `https://github.com/AgustinVelazquez0/Todo_List_Back`
 
 ## Tecnologías Utilizadas
 
