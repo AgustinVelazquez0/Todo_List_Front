@@ -36,34 +36,32 @@ function LoginForm() {
         response = await axios.post(
           "https://todolistback-production-13b3.up.railway.app/users/login",
           {
-            email: formData.email,
-            password: formData.password,
+            email: formData.email.trim(),
+            password: formData.password.trim(),
           }
         );
+        const { token, user } = response.data;
+        login(token, user);
+        navigate("/todos");
       } else {
         // Registrar nuevo usuario
         response = await axios.post(
           "https://todolistback-production-13b3.up.railway.app/users/register",
           {
-            name: formData.name,
-            document: formData.document,
-            email: formData.email,
-            password: formData.password,
+            name: formData.name.trim(),
+            document: formData.document.trim(),
+            email: formData.email.trim(),
+            password: formData.password.trim(),
           }
         );
 
         setSuccessMessage("¡Registro exitoso!");
         setTimeout(() => setSuccessMessage(""), 5000);
       }
-
-      if (isLogin) {
-        const { token, user } = response.data;
-        login(token, user);
-        navigate("/todos");
-      }
     } catch (err) {
       setError(
-        err.response?.data?.message || "Error, por favor intente de nuevo."
+        err.response?.data?.message ||
+          "Hubo un error. Por favor, intente de nuevo."
       );
     } finally {
       setIsLoading(false);
