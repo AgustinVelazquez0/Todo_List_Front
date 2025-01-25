@@ -22,14 +22,17 @@ export function TodoProvider({ children }) {
     const fetchTodos = async () => {
       try {
         const token = localStorage.getItem("token");
+        if (!token) throw new Error("No token found");
+
         const response = await axios.get("http://localhost:5000/todos", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+
         setTodos(response.data);
       } catch (error) {
-        console.error("Error fetching todos:", error);
+        console.error("Error fetching todos:", error.response || error.message);
         setTodos([]);
       } finally {
         setLoading(false);
@@ -47,6 +50,8 @@ export function TodoProvider({ children }) {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found");
+
       const response = await axios.post(
         "http://localhost:5000/todos",
         newTodo,
@@ -58,7 +63,7 @@ export function TodoProvider({ children }) {
       );
       setTodos((prevTodos) => [...prevTodos, response.data]);
     } catch (error) {
-      console.error("Error adding todo:", error);
+      console.error("Error adding todo:", error.response || error.message);
     }
   };
 
@@ -68,6 +73,8 @@ export function TodoProvider({ children }) {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found");
+
       await axios.put(
         `http://localhost:5000/todos/${_id}`,
         { ...todo, completed: !todo.completed },
@@ -83,13 +90,15 @@ export function TodoProvider({ children }) {
         )
       );
     } catch (error) {
-      console.error("Error toggling todo:", error);
+      console.error("Error toggling todo:", error.response || error.message);
     }
   };
 
   const deleteTodo = async (_id) => {
     try {
       const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found");
+
       await axios.delete(`http://localhost:5000/todos/${_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -97,7 +106,7 @@ export function TodoProvider({ children }) {
       });
       setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== _id));
     } catch (error) {
-      console.error("Error deleting todo:", error);
+      console.error("Error deleting todo:", error.response || error.message);
     }
   };
 
@@ -107,6 +116,8 @@ export function TodoProvider({ children }) {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found");
+
       await axios.put(`http://localhost:5000/todos/${_id}`, updatedTodo, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -116,7 +127,7 @@ export function TodoProvider({ children }) {
         prevTodos.map((todo) => (todo._id === _id ? updatedTodo : todo))
       );
     } catch (error) {
-      console.error("Error editing todo:", error);
+      console.error("Error editing todo:", error.response || error.message);
     }
   };
 
