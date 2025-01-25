@@ -11,24 +11,28 @@ import styles from "../App.module.css";
 
 function AppContent() {
   const { loading } = useAuth();
-  const location = useLocation(); // Obtener la ruta actual
+  const location = useLocation();
 
   if (loading) {
     return <Loading />;
   }
 
+  // Verificar si estamos en la ruta de editar
+  const isEditRoute = location.pathname.startsWith("/edit");
+  const isLoginRoute = location.pathname === "/login"; // Verificar si estamos en la ruta de login
+
   return (
     <div className={styles.PrincipalContenedor}>
-      {/* Solo mostrar el Navbar si no estamos en la ruta /login */}
-      {location.pathname !== "/login" && <Navbar />}
-
+      <Navbar />
       <div className={styles.App}>
-        {/* Solo mostrar el formulario de agregar tarea si no estamos en la ruta /login */}
-        {location.pathname !== "/login" && <AddTodoForm />}
+        {/* Solo mostrar AddTodoForm si no estamos en la ruta de editar o login */}
+        {!isEditRoute && !isLoginRoute && <AddTodoForm />}
 
         <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/" element={<Navigate to="/todos" replace />} />
+
+          {/* Rutas protegidas para /todos */}
           <Route
             path="/todos"
             element={
@@ -37,6 +41,8 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+
+          {/* Ruta para editar, solo muestra el formulario de edición */}
           <Route
             path="/edit/:_id"
             element={
