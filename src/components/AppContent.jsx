@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
@@ -11,6 +11,7 @@ import styles from "../App.module.css";
 
 function AppContent() {
   const { loading } = useAuth();
+  const location = useLocation(); // Obtener la ruta actual
 
   if (loading) {
     return <Loading />;
@@ -18,9 +19,13 @@ function AppContent() {
 
   return (
     <div className={styles.PrincipalContenedor}>
-      <Navbar />
+      {/* Solo mostrar el Navbar si no estamos en la ruta /login */}
+      {location.pathname !== "/login" && <Navbar />}
+
       <div className={styles.App}>
-        <AddTodoForm />
+        {/* Solo mostrar el formulario de agregar tarea si no estamos en la ruta /login */}
+        {location.pathname !== "/login" && <AddTodoForm />}
+
         <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/" element={<Navigate to="/todos" replace />} />
