@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
     }
 
     axios
-      .get("http://localhost:5000/users/me", {
+      .get("https://todolistback-production-13b3.up.railway.app/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

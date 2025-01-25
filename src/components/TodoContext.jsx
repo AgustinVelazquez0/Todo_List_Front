@@ -24,11 +24,14 @@ export function TodoProvider({ children }) {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
 
-        const response = await axios.get("http://localhost:5000/todos", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://todolistback-production-13b3.up.railway.app/todos",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setTodos(response.data);
       } catch (error) {
@@ -53,7 +56,7 @@ export function TodoProvider({ children }) {
       if (!token) throw new Error("No token found");
 
       const response = await axios.post(
-        "http://localhost:5000/todos",
+        "https://todolistback-production-13b3.up.railway.app/todos",
         newTodo,
         {
           headers: {
@@ -76,7 +79,7 @@ export function TodoProvider({ children }) {
       if (!token) throw new Error("No token found");
 
       await axios.put(
-        `http://localhost:5000/todos/${_id}`,
+        `https://todolistback-production-13b3.up.railway.app/todos/${_id}`,
         { ...todo, completed: !todo.completed },
         {
           headers: {
@@ -99,11 +102,14 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      await axios.delete(`http://localhost:5000/todos/${_id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://todolistback-production-13b3.up.railway.app/todos/${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== _id));
     } catch (error) {
       console.error("Error deleting todo:", error.response || error.message);
@@ -118,11 +124,15 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      await axios.put(`http://localhost:5000/todos/${_id}`, updatedTodo, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.put(
+        `https://todolistback-production-13b3.up.railway.app/todos/${_id}`,
+        updatedTodo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setTodos((prevTodos) =>
         prevTodos.map((todo) => (todo._id === _id ? updatedTodo : todo))
       );
