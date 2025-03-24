@@ -54,13 +54,34 @@ Asegúrate de tener instalados los siguientes programas antes de comenzar:
 
 - **`src/`**: Contiene todos los archivos de la aplicación.
 
-  - **`components/`**: Componentes de React como `AddTodoForm`, `TodoContext`, `TodoList`, `TodoItem` y `EditTodoForm`.
-  - **`App.jsx`**: Componente principal de la aplicación.
-  - **`main.jsx`**: Punto de entrada de React.
+- **`components/`**: Contiene los componentes reutilizables de React. Cada componente tiene su propio archivo y, cuando es necesario, un archivo de estilos utilizando **CSS Modules** para mantener el diseño encapsulado. Destacan:
 
-  ## Back-End con MongoDB
+  - `AddTodoForm`: Formulario para agregar nuevas tareas.
+  - `TodoItem`: Representa un ítem individual de la lista de tareas.
+  - `TodoList`: Muestra la lista completa de tareas.
+  - `LoginForm`: Formulario para el inicio de sesión.
+  - `ProtectedRoute`: Protege las rutas que requieren autenticación.
 
-  Además, he desarrollado un back-end para este proyecto utilizando MongoDB, el cual se encuentra en un repositorio separado y público. Este back-end permite la persistencia de datos, como las tareas creadas por los usuarios. Puedes explorar ese repositorio en el siguiente enlace: `https://github.com/AgustinVelazquez0/Todo_List_Back`
+  - **`context/`**: Almacena los **Contextos de React**, que permiten compartir el estado global de la aplicación. Por ejemplo, `AuthContext` gestiona la autenticación de los usuarios.
+
+- **`hooks/`**: Incluye **custom hooks** personalizados para abstraer lógica compleja. Por ejemplo:
+
+  - `useAuth`: Maneja la lógica relacionada con la autenticación.
+  - `useTodo`: Gestiona las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) de las tareas.
+
+- **`assets/`**: Contiene recursos estáticos como imágenes o íconos utilizados en la interfaz.
+
+- **`BackEnd/`**: Incluye un archivo `db.json` que simula un backend para realizar pruebas locales sin necesidad de una base de datos externa.
+
+- **`App.jsx`**: Es el componente principal que define la estructura general de la aplicación, integrando el sistema de rutas y los contextos.
+
+- **`main.jsx`**: Es el punto de entrada de la aplicación, donde React monta la aplicación en el DOM.
+
+---
+
+## Back-End con MongoDB
+
+Además, he desarrollado un back-end para este proyecto utilizando MongoDB, el cual se encuentra en un repositorio separado y público. Este back-end permite la persistencia de datos, como las tareas creadas por los usuarios. Puedes explorar ese repositorio en el siguiente enlace: `https://github.com/AgustinVelazquez0/Todo_List_Back`
 
 ## Tecnologías Utilizadas
 
