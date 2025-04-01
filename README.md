@@ -79,9 +79,9 @@ Asegúrate de tener instalados los siguientes programas antes de comenzar:
 
 ---
 
-## Back-End con MongoDB
+## Back-End con MongoDB y PostgreSQL
 
-Además, he desarrollado un back-end para este proyecto utilizando MongoDB, el cual se encuentra en un repositorio separado y público. Este back-end permite la persistencia de datos, como las tareas creadas por los usuarios. Puedes explorar ese repositorio en el siguiente enlace: `https://github.com/AgustinVelazquez0/Todo_List_Back`
+Además, he desarrollado un back-end para este proyecto utilizando MongoDB y PosgreSQL, el cual se encuentra en un repositorio separado y público. Este back-end permite la persistencia de datos, como las tareas creadas por los usuarios y un login. Puedes explorar ese repositorio en el siguiente enlace: `https://github.com/AgustinVelazquez0/Todo_List_Back`
 
 ## Tecnologías Utilizadas
 
