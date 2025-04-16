@@ -31,7 +31,9 @@ function LoginForm() {
 
     try {
       let response;
-      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl =
+        import.meta.env.VITE_API_URL ||
+        "https://todo-list-back-lnxn.onrender.com";
 
       console.log("API URL:", apiUrl);
 

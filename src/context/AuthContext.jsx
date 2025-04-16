@@ -42,11 +42,17 @@ export function AuthProvider({ children }) {
 
     // Usar la URL de la API desde la variable de entorno
     axios
-      .get(`${import.meta.env.VITE_API_URL}/users/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `${
+          import.meta.env.VITE_API_URL ||
+          "https://todo-list-back-lnxn.onrender.com"
+        }/users/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         if (response.data) {
           setAuthenticated(true);

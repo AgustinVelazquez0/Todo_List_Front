@@ -24,7 +24,9 @@ export function TodoProvider({ children }) {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
 
-        const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
+        const apiUrl =
+          import.meta.env.VITE_API_URL ||
+          "https://todo-list-back-lnxn.onrender.com";
 
         const response = await axios.get(`${apiUrl}/todos`, {
           headers: {
@@ -54,7 +56,9 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl =
+        import.meta.env.VITE_API_URL ||
+        "https://todo-list-back-lnxn.onrender.com";
 
       const response = await axios.post(`${apiUrl}/todos`, newTodo, {
         headers: {
@@ -75,7 +79,9 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl =
+        import.meta.env.VITE_API_URL ||
+        "https://todo-list-back-lnxn.onrender.com";
 
       await axios.put(
         `${apiUrl}/todos/${_id}`,
@@ -101,7 +107,9 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl =
+        import.meta.env.VITE_API_URL ||
+        "https://todo-list-back-lnxn.onrender.com";
 
       await axios.delete(`${apiUrl}/todos/${_id}`, {
         headers: {
@@ -122,7 +130,9 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl =
+        import.meta.env.VITE_API_URL ||
+        "https://todo-list-back-lnxn.onrender.com";
 
       await axios.put(`${apiUrl}/todos/${_id}`, updatedTodo, {
         headers: {
