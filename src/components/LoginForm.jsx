@@ -40,6 +40,12 @@ function LoginForm() {
           email: formData.email,
           password: formData.password,
         });
+
+        // Al iniciar sesión correctamente, se guarda el token en los encabezados globales de axios
+        const { token, user } = response.data;
+        login(token, user);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; // Agregar token en los encabezados para las siguientes solicitudes
+        navigate("/todos");
       } else {
         // Registrar nuevo usuario
         response = await axios.post(`${apiUrl}/users/register`, {
@@ -51,12 +57,6 @@ function LoginForm() {
 
         setSuccessMessage("¡Registro exitoso!");
         setTimeout(() => setSuccessMessage(""), 5000);
-      }
-
-      if (isLogin) {
-        const { token, user } = response.data;
-        login(token, user);
-        navigate("/todos");
       }
     } catch (err) {
       setError(
