@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import process from "process";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
