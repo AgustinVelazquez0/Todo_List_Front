@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./Styles/LoginForm.module.css";
+import process from "process";
 
 function LoginForm() {
   const { login } = useContext(AuthContext);
@@ -31,15 +32,17 @@ function LoginForm() {
 
     try {
       let response;
+      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+
       if (isLogin) {
         // Iniciar sesión
-        response = await axios.post("http://localhost:5000/users/login", {
+        response = await axios.post(`${apiUrl}/users/login`, {
           email: formData.email,
           password: formData.password,
         });
       } else {
         // Registrar nuevo usuario
-        response = await axios.post("http://localhost:5000/users/register", {
+        response = await axios.post(`${apiUrl}/users/register`, {
           name: formData.name,
           document: formData.document,
           email: formData.email,

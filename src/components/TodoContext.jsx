@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import PropTypes from "prop-types";
+import process from "process";
 
 const TodoContext = createContext();
 
@@ -24,7 +25,9 @@ export function TodoProvider({ children }) {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
 
-        const response = await axios.get("http://localhost:5000/todos", {
+        const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+
+        const response = await axios.get(`${apiUrl}/todos`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -52,15 +55,13 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const response = await axios.post(
-        "http://localhost:5000/todos",
-        newTodo,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+
+      const response = await axios.post(`${apiUrl}/todos`, newTodo, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setTodos((prevTodos) => [...prevTodos, response.data]);
     } catch (error) {
       console.error("Error adding todo:", error.response || error.message);
@@ -75,8 +76,10 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
+      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+
       await axios.put(
-        `http://localhost:5000/todos/${_id}`,
+        `${apiUrl}/todos/${_id}`,
         { ...todo, completed: !todo.completed },
         {
           headers: {
@@ -99,7 +102,9 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      await axios.delete(`http://localhost:5000/todos/${_id}`, {
+      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+
+      await axios.delete(`${apiUrl}/todos/${_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -118,7 +123,9 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      await axios.put(`http://localhost:5000/todos/${_id}`, updatedTodo, {
+      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+
+      await axios.put(`${apiUrl}/todos/${_id}`, updatedTodo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

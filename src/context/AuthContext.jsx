@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import process from "process";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -41,8 +41,9 @@ export function AuthProvider({ children }) {
       return;
     }
 
+    // Usar la URL de la API desde la variable de entorno
     axios
-      .get("http://localhost:5000/users/me", {
+      .get(`${process.env.REACT_APP_API_URL}/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
