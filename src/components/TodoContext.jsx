@@ -24,7 +24,7 @@ export function TodoProvider({ children }) {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
 
-        const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+        const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
 
         const response = await axios.get(`${apiUrl}/todos`, {
           headers: {
@@ -54,7 +54,7 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
 
       const response = await axios.post(`${apiUrl}/todos`, newTodo, {
         headers: {
@@ -75,7 +75,7 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
 
       await axios.put(
         `${apiUrl}/todos/${_id}`,
@@ -101,7 +101,7 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
 
       await axios.delete(`${apiUrl}/todos/${_id}`, {
         headers: {
@@ -122,7 +122,7 @@ export function TodoProvider({ children }) {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
 
       await axios.put(`${apiUrl}/todos/${_id}`, updatedTodo, {
         headers: {

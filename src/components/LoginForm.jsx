@@ -31,7 +31,7 @@ function LoginForm() {
 
     try {
       let response;
-      const apiUrl = process.env.REACT_APP_API_URL; // Obtener la URL desde las variables de entorno
+      const apiUrl = import.meta.env.VITE_API_URL; // Obtener la URL desde las variables de entorno
 
       console.log("API URL:", apiUrl);
 

@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
 
     // Usar la URL de la API desde la variable de entorno
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users/me`, {
+      .get(`${import.meta.env.VITE_API_URL}/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

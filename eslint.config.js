@@ -12,7 +12,7 @@ export default [
       ecmaVersion: 2020,
       globals: {
         ...globals.browser,
-        ...globals.node, // 👈 Esto es lo que agregamos para que ESLint entienda process
+        ...globals.node,
       },
       parserOptions: {
         ecmaVersion: "latest",
